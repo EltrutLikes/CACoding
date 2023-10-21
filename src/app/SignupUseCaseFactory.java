@@ -2,6 +2,7 @@ package app;
 
 import interface_adapter.clear_users.ClearController;
 import interface_adapter.clear_users.ClearPresenter;
+import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -29,12 +30,12 @@ public class SignupUseCaseFactory {
 
     public static SignupView create(
             ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface userDataAccessObject,
-            ClearUserDataAccessInterface clearUserDataAccessInterface) {
+            ClearUserDataAccessInterface clearUserDataAccessInterface, ClearViewModel clearViewModel) {
 
         try {
             SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
-            ClearController clearController = createClearController(clearUserDataAccessInterface);
-            return new SignupView(signupController, signupViewModel, clearController);
+            ClearController clearController = createClearController(clearUserDataAccessInterface, clearViewModel, viewManagerModel);
+            return new SignupView(signupController, signupViewModel, clearController, clearViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
@@ -56,8 +57,9 @@ public class SignupUseCaseFactory {
         return new SignupController(userSignupInteractor);
     }
 
-    public static ClearController createClearController(ClearUserDataAccessInterface userDataAccessObject) throws IOException {
-        ClearOutputBoundary clearOutputBoundary = new ClearPresenter();
+    public static ClearController createClearController(ClearUserDataAccessInterface userDataAccessObject,
+                                                        ClearViewModel clearViewModel, ViewManagerModel viewManagerModel) throws IOException {
+        ClearOutputBoundary clearOutputBoundary = new ClearPresenter(clearViewModel, viewManagerModel);
 
         ClearInputBoundary clearInputBoundary = new ClearInteractor(userDataAccessObject, clearOutputBoundary);
 

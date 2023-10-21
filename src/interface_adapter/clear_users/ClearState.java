@@ -15,4 +15,13 @@ public class ClearState {
     public List<String> getUsernames() {
         return this.usernames;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (String username : usernames) {
+            s.append(username).append("\n");
+        }
+        return s.toString();
+    }
 }

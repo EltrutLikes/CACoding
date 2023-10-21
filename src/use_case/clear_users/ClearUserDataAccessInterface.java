@@ -4,6 +4,5 @@ import entity.User;
 import java.util.List;
 
 public interface ClearUserDataAccessInterface {
-    public void deleteAll();
-    public List<String> getAll();
+    public List<String> deleteAll();
 }
