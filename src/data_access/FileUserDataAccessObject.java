@@ -100,4 +100,9 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
     public void deleteAll() {
         accounts.clear();
     }
+
+    @Override
+    public List<String> getAll() {
+        return new ArrayList<>(accounts.keySet());
+    }
 }
