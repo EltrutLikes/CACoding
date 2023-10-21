@@ -16,6 +16,10 @@ public class ClearState {
         return this.usernames;
     }
 
+    public void setUsernames(List<String> usernames) {
+        this.usernames = usernames;
+    }
+
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
